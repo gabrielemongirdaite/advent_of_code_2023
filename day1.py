@@ -66,15 +66,14 @@ lines = read_file('input_day1.txt')
 r = 0
 for i in lines:
     r += find_numbers(i)[0]
-print('1st part answer: '+ str(r))
+print('1st part answer: ' + str(r))
 print("--- %s seconds for 1st part---" % (time.time() - start_time))
 
 start_time = time.time()
 updated_data = replace_spelled_numbers(lines)
 r = 0
 for i in updated_data:
-    #print(find_numbers(i)[0])
+    # print(find_numbers(i)[0])
     r += find_numbers(i)[0]
-print('2nd part answer: '+ str(r))
+print('2nd part answer: ' + str(r))
 print("--- %s seconds for 2nd part---" % (time.time() - start_time))
-

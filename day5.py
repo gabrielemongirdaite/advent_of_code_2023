@@ -116,6 +116,5 @@ humidity_to_location = ranges(temperature_to_humidity, [maps[6]])
 mins = []
 for i in humidity_to_location:
     mins.append(i[0])
-
 print('2nd part answer: ' + str(min(mins)))
 print("--- %s seconds for 2nd part---" % (time.time() - start_time))

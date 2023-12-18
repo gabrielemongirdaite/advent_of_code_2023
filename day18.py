@@ -16,14 +16,6 @@ def read_file(file_name):
     return direction, length, colors
 
 
-def remove_duplicates_in_nested_list(lst):
-    new_lst = []
-    for i in lst:
-        if i not in new_lst:
-            new_lst.append(i)
-    return new_lst
-
-
 def define_perimeter(direction, length):
     coordinates = [(0, 0)]
     for ind, i in enumerate(direction):
@@ -37,6 +29,21 @@ def define_perimeter(direction, length):
                 coordinates.append((starting_point[0] - k, starting_point[1]))
             else:
                 coordinates.append((starting_point[0] + k, starting_point[1]))
+    return coordinates
+
+
+def define_perimeter2(direction, length):
+    coordinates = [(0, 0)]
+    for ind, i in enumerate(direction):
+        starting_point = coordinates[-1]
+        if i == 'U':
+            coordinates.append((starting_point[0], starting_point[1] - length[ind]))
+        elif i == 'D':
+            coordinates.append((starting_point[0], starting_point[1] + length[ind]))
+        elif i == 'L':
+            coordinates.append((starting_point[0] - length[ind], starting_point[1]))
+        else:
+            coordinates.append((starting_point[0] + length[ind], starting_point[1]))
     return coordinates
 
 
@@ -117,21 +124,18 @@ max_y = max([i[1] for i in old_coordinates])
 
 cubes = count_cubes(coordinates, polygon)
 
-print('1st part answer: ' + str(cubes + len(coordinates)-1))
+coordinates = define_perimeter2(direction, length)
+polygon = Polygon(coordinates)
+print(polygon.area + polygon.length / 2 + 1) #quick calculation
+
+print('1st part answer: ' + str(cubes + len(old_coordinates) - 1)) #based on udf (not working for second part)
 print("--- %s seconds for 1st part---" % (time.time() - start_time))
 
+start_time = time.time()
+direction, length = part2_direction_length(colors)
 
-# start_time = time.time()
-# direction, length = part2_direction_length(colors)
-# coordinates = define_perimeter(direction, length)
-# old_coordinates = coordinates
-# polygon = Polygon(old_coordinates)
-# print('here')
-# coordinates = sorted(coordinates, key=itemgetter(1, 0))
-#
-# min_y = min([i[1] for i in old_coordinates])
-# max_y = max([i[1] for i in old_coordinates])
-#
-# cubes = count_cubes(coordinates, polygon)
-# print('2nd part answer: ' + str(cubes + len(coordinates)-1))
-# print("--- %s seconds for 2nd part---" % (time.time() - start_time))
+coordinates = define_perimeter2(direction, length)
+polygon = Polygon(coordinates)
+
+print('2nd part answer: ' + str(polygon.area + polygon.length / 2 + 1))
+print("--- %s seconds for 2nd part---" % (time.time() - start_time))
